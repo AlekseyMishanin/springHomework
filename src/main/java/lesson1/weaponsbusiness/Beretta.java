@@ -1,6 +1,7 @@
 package lesson1.weaponsbusiness;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
  * */
 
 @Service("beretta")
+@Qualifier("ber")
 public class Beretta implements GunProvider {
 
     private BulletProvider bulletProvider;

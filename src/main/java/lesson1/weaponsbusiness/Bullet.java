@@ -1,6 +1,7 @@
 package lesson1.weaponsbusiness;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
  * */
 
 @Component("bullet")
+@Qualifier("bul")
 public class Bullet {
 
     private String name;

@@ -1,9 +1,11 @@
 package lesson1.appcontext.common;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service("renderer")
+@Qualifier("mesread")
 public class StandartMessageReader implements MessageReader {
 
     private MessageProvider messageProvider;

@@ -2,6 +2,7 @@ package lesson3.dzspring.dao;
 
 import lesson3.dzspring.interfaces.CommandDAO;
 import lesson3.dzspring.model.Project;
+import lombok.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,13 +14,13 @@ import java.util.List;
 public class ProjectDAO extends AbstractDAO implements CommandDAO<Project> {
 
 
-    public void persist (Project project) {entityManager.persist(project);}
+    public void persist (@NonNull final Project project) {entityManager.persist(project);}
 
-    public void merge (Project project) {entityManager.merge(project);}
+    public void merge (@NonNull final Project project) {entityManager.merge(project);}
 
-    public Project find (String id) {return entityManager.find(Project.class, id);}
+    public Project find (@NonNull final String id) {return entityManager.find(Project.class, id);}
 
-    public void remove (String id) {entityManager.remove(find(id));}
+    public void remove (@NonNull final String id) {entityManager.remove(find(id));}
 
     public List<Project> findAll(){
         return entityManager.createQuery("from " + Project.class.getSimpleName(), Project.class).getResultList();
@@ -29,7 +30,7 @@ public class ProjectDAO extends AbstractDAO implements CommandDAO<Project> {
         findAll().stream().forEach(a->entityManager.remove(a));
     }
 
-    public Project getById(final String id){
+    public Project getById(@NonNull final  String id){
         if(id.isEmpty()) return null;
         return getEntity(entityManager.createQuery("select a from Project a where a.id = :id", Project.class)
                 .setParameter("id", id));

@@ -1,7 +1,6 @@
 package lesson3.dzspring.dao;
 
 import lesson3.dzspring.interfaces.CommandDAO;
-import lesson3.dzspring.model.Project;
 import lesson3.dzspring.model.Task;
 import lombok.NonNull;
 import org.springframework.stereotype.Component;
@@ -18,7 +17,7 @@ import java.util.Optional;
 @Transactional
 public class TaskDAO extends AbstractDAO implements CommandDAO<Task> {
 
-    public Optional<Task> findSome(@NonNull String id) {
+    public Optional<Task> findSome(@NonNull final String id) {
         Optional<Task> result;
         if(id.isEmpty()) {
             result = Optional.empty();
@@ -28,19 +27,19 @@ public class TaskDAO extends AbstractDAO implements CommandDAO<Task> {
         return result;
     }
 
-    public void persist (Task task) {entityManager.persist(task);}
+    public void persist (@NonNull final Task task) {entityManager.persist(task);}
 
-    public void merge (Task task) {entityManager.merge(task);}
+    public void merge (@NonNull final Task task) {entityManager.merge(task);}
 
-    public Task find (String id) {return entityManager.find(Task.class, id);}
+    public Task find (@NonNull final String id) {return entityManager.find(Task.class, id);}
 
-    public void remove (String id) {entityManager.remove(find(id));}
+    public void remove (@NonNull final String id) {entityManager.remove(find(id));}
 
     public List<Task> findAll(){
         return entityManager.createQuery("from " + Task.class.getSimpleName(), Task.class).getResultList();
     }
 
-    public Task getById(final String id){
+    public Task getById(@NonNull final  String id){
         if(id.isEmpty()) return null;
         return getEntity(entityManager.createQuery("select a from Task a where a.id = :id", Task.class)
                 .setParameter("id", id));

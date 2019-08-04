@@ -17,6 +17,7 @@ import java.util.Optional;
 @Transactional
 public class TaskDAO extends AbstractDAO implements CommandDAO<Task> {
 
+    @Transactional(readOnly = true)
     public Optional<Task> findSome(@NonNull final String id) {
         Optional<Task> result;
         if(id.isEmpty()) {
@@ -31,20 +32,24 @@ public class TaskDAO extends AbstractDAO implements CommandDAO<Task> {
 
     public void merge (@NonNull final Task task) {entityManager.merge(task);}
 
+    @Transactional(readOnly = true)
     public Task find (@NonNull final String id) {return entityManager.find(Task.class, id);}
 
     public void remove (@NonNull final String id) {entityManager.remove(find(id));}
 
+    @Transactional(readOnly = true)
     public List<Task> findAll(){
         return entityManager.createQuery("from " + Task.class.getSimpleName(), Task.class).getResultList();
     }
 
+    @Transactional(readOnly = true)
     public Task getById(@NonNull final  String id){
         if(id.isEmpty()) return null;
         return getEntity(entityManager.createQuery("select a from Task a where a.id = :id", Task.class)
                 .setParameter("id", id));
     }
 
+    @Transactional(readOnly = true)
     public List<Task> getSortedByName(){
         final CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         final CriteriaQuery<Task> cq = cb.createQuery(Task.class);

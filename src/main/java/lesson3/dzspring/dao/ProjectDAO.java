@@ -18,10 +18,12 @@ public class ProjectDAO extends AbstractDAO implements CommandDAO<Project> {
 
     public void merge (@NonNull final Project project) {entityManager.merge(project);}
 
+    @Transactional(readOnly = true)
     public Project find (@NonNull final String id) {return entityManager.find(Project.class, id);}
 
     public void remove (@NonNull final String id) {entityManager.remove(find(id));}
 
+    @Transactional(readOnly = true)
     public List<Project> findAll(){
         return entityManager.createQuery("from " + Project.class.getSimpleName(), Project.class).getResultList();
     }
@@ -30,12 +32,14 @@ public class ProjectDAO extends AbstractDAO implements CommandDAO<Project> {
         findAll().stream().forEach(a->entityManager.remove(a));
     }
 
+    @Transactional(readOnly = true)
     public Project getById(@NonNull final  String id){
         if(id.isEmpty()) return null;
         return getEntity(entityManager.createQuery("select a from Project a where a.id = :id", Project.class)
                 .setParameter("id", id));
     }
 
+    @Transactional(readOnly = true)
     public List<Project> getSortedByName(){
         final CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         final CriteriaQuery<Project> cq = cb.createQuery(Project.class);

@@ -20,10 +20,12 @@ public class UserDAO extends AbstractDAO implements CommandDAO<User> {
 
     public void merge (@NonNull final User user) {entityManager.merge(user);}
 
+    @Transactional(readOnly = true)
     public User find (@NonNull final String id) {return entityManager.find(User.class, id);}
 
     public void remove (@NonNull final String id) {entityManager.remove(find(id));}
 
+    @Transactional(readOnly = true)
     public List<User> findAll(){
         return entityManager.createQuery("from " + User.class.getSimpleName(), User.class).getResultList();
     }
@@ -32,12 +34,14 @@ public class UserDAO extends AbstractDAO implements CommandDAO<User> {
         findAll().stream().forEach(a->entityManager.remove(a));
     }
 
+    @Transactional(readOnly = true)
     public User getById(@NonNull final  String id){
         if(id.isEmpty()) return null;
         return getEntity(entityManager.createQuery("select a from User a where a.id = :id", User.class)
                 .setParameter("id", id));
     }
 
+    @Transactional(readOnly = true)
     public List<User> getSortedByName(){
         final CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         final CriteriaQuery<User> cq = cb.createQuery(User.class);
